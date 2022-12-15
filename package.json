@@ -1,0 +1,28 @@
+{
+  "name": "blog_app",
+  "version": "1.0.0",
+  "description": "Blog App with mern",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon blog_backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gokaySendil/Blog_App.git"
+  },
+  "author": "Gokaysendil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gokaySendil/Blog_App/issues"
+  },
+  "homepage": "https://github.com/gokaySendil/Blog_App#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
