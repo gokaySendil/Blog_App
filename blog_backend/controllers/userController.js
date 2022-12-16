@@ -46,10 +46,6 @@ const createUser = asyncHandler(async (req, res) => {
   }
 });
 
-const getUser = asyncHandler(async (req, res) => {
-  const uid = req.params.uid;
-});
-
 const loginUser = asyncHandler(async (req, res) => {
   let foundUser;
   // Get use data from body
@@ -96,8 +92,12 @@ const getJTWToken = (id) => {
 };
 const validateEmail = (email) => {
   // it validates parameter is an email or not
+  // İts a RE(Regular Expression)
   return email.match(
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
 };
+const getUser = asyncHandler(async (req, res) => {
+  res.status(200).json(req.user);
+});
 module.exports = { getUser, createUser, loginUser };
