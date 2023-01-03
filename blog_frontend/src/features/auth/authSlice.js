@@ -29,7 +29,6 @@ export const authSlice = createSlice({
     });
   },
 });
-
 // Register User
 const register = createAsyncThunk(
   "auth/register",

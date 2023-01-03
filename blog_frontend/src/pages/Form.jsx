@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
+import { register, reset } from "../features/auth/authSlice";
 const Form = () => {
   // To switch between login and register Form
   const [selectedTab, SetselectedTab] = useState(1);
@@ -27,10 +29,32 @@ const Form = () => {
       SetselectedTab(2);
     }
   };
+
+  const onChangeRegister = (e) => {
+    setRegisterFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
   // Login handler
   const onLoginSubmit = () => {};
   // Register handler
-  const onRegisterSubmit = () => {};
+
+  // Regfister redux variables
+  const { user, loading, error, success, message } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  const onRegisterSubmit = () => {
+    //Create userData
+    const newUser = {
+      username: username,
+      email: email,
+      password: Rpassword,
+    };
+    // dispatch register action
+    dispatch(register(newUser));
+  };
 
   return (
     <div>
@@ -97,7 +121,7 @@ const Form = () => {
                 name="username"
                 value={username}
                 placeholder="Username"
-                onChange={() => {}}
+                onChange={onChangeRegister}
                 type="text"
                 className="form-control"
               />
@@ -108,26 +132,26 @@ const Form = () => {
                 name="email"
                 value={email}
                 placeholder="Email"
-                onChange={() => {}}
+                onChange={onChangeRegister}
                 type="email"
                 className="form-control"
               />
             </div>
             <div className="form-input">
               <input
-                id="password"
-                name="password"
+                id="Rpassword"
+                name="Rpassword"
                 value={Rpassword}
                 placeholder="Password"
-                onChange={() => {}}
+                onChange={onChangeRegister}
                 type="password"
                 className="form-control"
               />
             </div>
             <div className="form-input">
               <input
-                id="password"
-                name="password"
+                id="Rpassword2"
+                name="Rpassword2"
                 value={Rpassword2}
                 placeholder="Confrim Password"
                 onChange={() => {}}
