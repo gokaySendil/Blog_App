@@ -2,7 +2,14 @@ import axios from "axios";
 const BASEURL = "http://localhost:8000/api/users";
 
 // Login
-const loginUser = async () => {};
+const loginUser = async (userData) => {
+  const res = await axios.post(BASEURL+"/login",userData);
+  if(res.data){
+    // Save the user to localStorage
+    localStorage.setItem("user", JSON.stringify(res.data));
+  }
+  return res.data;
+};
 
 // Register
 const registerUser = async (userData) => {
@@ -16,7 +23,7 @@ const registerUser = async (userData) => {
 
 // Logout
 const logoutUser = async () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("user")
 };
 
 const authService = {

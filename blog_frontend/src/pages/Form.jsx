@@ -2,28 +2,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { register, reset } from "../features/auth/authSlice";
+import { register, reset, login } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
 const Form = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
   // To switch between login and register Form
   const [selectedTab, SetselectedTab] = useState(1);
-  // Login Form inputs
-  const [loginFormData, setloginFormData] = useState({
-    loginMethod: "",
-    password: "",
-  });
-  const { loginMethod, password } = loginFormData;
-  // Register Form inputs
-  const [registerFormData, setRegisterFormData] = useState({
-    username: "",
-    email: "",
-    Rpassword: "",
-    Rpassword2: "",
-  });
-  const { username, email, Rpassword, Rpassword2 } = registerFormData;
-
   const handleSwitch = (tab) => {
     if (tab === 1 && selectedTab !== 1) {
       SetselectedTab(1);
@@ -33,23 +18,29 @@ const Form = () => {
     }
   };
 
+
+  // Register Form inputs
+  const [registerFormData, setRegisterFormData] = useState({
+    username: "",
+    email: "",
+    Rpassword: "",
+    Rpassword2: "",
+  });
+  const { username, email, Rpassword, Rpassword2 } = registerFormData;
+
+
+
   const onChangeRegister = (e) => {
     setRegisterFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
-  // Login handler
-  const onLoginSubmit = () => {
-    
-  };
-  
-
   // Register redux variables
   const { user, loading, error, success, message } = useSelector(
     (state) => state.auth
   );
-  
+
   // Register handler
   const onRegisterSubmit = () => {
     //Create userData
@@ -61,9 +52,30 @@ const Form = () => {
     // dispatch register action
     dispatch(register(newUser))
   };
-  useEffect(()=> {
-    if(selectedTab===2){
-      if(success || user){
+  // Login Form inputs
+  const [loginFormData, setloginFormData] = useState({
+    loginMethod: "",
+    password: "",
+  });
+  const { loginMethod, password } = loginFormData;
+
+  // Login handler
+  const onLoginSubmit = () => {
+    // User temp data
+    const u_login = {
+      loginMethod,
+      password,
+    }
+    // dispacth login action
+    dispatch(login(u_login));
+
+  };
+
+
+
+  useEffect(() => {
+    if (selectedTab === 2) {
+      if (success|| user) {
         toast.success("User Created")
         console.log(user)
         setRegisterFormData({
@@ -74,13 +86,26 @@ const Form = () => {
         })
         nav("/main");
       }
+      if (error) {
+        toast.error(message);
+      }
+    }
+    else if(selectedTab===1){
+      if(success|| user){
+        toast.success(`Logged in`)
+        setloginFormData({
+          loginMethod:"",
+          password:""
+        })
+        nav("/main")
+      }
       if(error){
         toast.error(message);
       }
-      dispatch(reset())
       
     }
-  },[user,error,success,message,])
+    dispatch(reset())
+  }, [user, error, success, message,dispatch])
 
   return (
     <div>
@@ -110,7 +135,7 @@ const Form = () => {
                 name="loginMethod"
                 value={loginMethod}
                 placeholder="Username or Email"
-                onChange={() => {}}
+                onChange={() => { }}
                 type="text"
                 className="form-control"
               />
@@ -121,7 +146,7 @@ const Form = () => {
                 name="password"
                 value={password}
                 placeholder="Password"
-                onChange={() => {}}
+                onChange={() => { }}
                 type="password"
                 className="form-control"
               />
