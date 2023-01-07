@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { register } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { register, reset } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 const Form = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
   // To switch between login and register Form
   const [selectedTab, SetselectedTab] = useState(1);
-
   // Login Form inputs
   const [loginFormData, setloginFormData] = useState({
     loginMethod: "",
@@ -37,14 +40,17 @@ const Form = () => {
     }));
   };
   // Login handler
-  const onLoginSubmit = () => {};
-  // Register handler
+  const onLoginSubmit = () => {
+    
+  };
+  
 
   // Register redux variables
   const { user, loading, error, success, message } = useSelector(
     (state) => state.auth
   );
-  const dispatch = useDispatch();
+  
+  // Register handler
   const onRegisterSubmit = () => {
     //Create userData
     const newUser = {
@@ -55,7 +61,26 @@ const Form = () => {
     // dispatch register action
     dispatch(register(newUser))
   };
-  
+  useEffect(()=> {
+    if(selectedTab===2){
+      if(success || user){
+        toast.success("User Created")
+        console.log(user)
+        setRegisterFormData({
+          username: "",
+          email: "",
+          Rpassword: "",
+          Rpassword2: "",
+        })
+        nav("/main");
+      }
+      if(error){
+        toast.error(message);
+      }
+      dispatch(reset())
+      
+    }
+  },[user,error,success,message,])
 
   return (
     <div>
