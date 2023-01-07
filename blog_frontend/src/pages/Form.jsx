@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { register, reset } from "../features/auth/authSlice";
+import { register } from "../features/auth/authSlice";
 const Form = () => {
   // To switch between login and register Form
   const [selectedTab, SetselectedTab] = useState(1);
@@ -40,7 +40,7 @@ const Form = () => {
   const onLoginSubmit = () => {};
   // Register handler
 
-  // Regfister redux variables
+  // Register redux variables
   const { user, loading, error, success, message } = useSelector(
     (state) => state.auth
   );
@@ -53,8 +53,9 @@ const Form = () => {
       password: Rpassword,
     };
     // dispatch register action
-    dispatch(register(newUser));
+    dispatch(register(newUser))
   };
+  
 
   return (
     <div>
@@ -154,13 +155,13 @@ const Form = () => {
                 name="Rpassword2"
                 value={Rpassword2}
                 placeholder="Confrim Password"
-                onChange={() => {}}
+                onChange={onChangeRegister}
                 type="password"
                 className="form-control"
               />
             </div>
             <div className="form-button">
-              <button type="submit">Log in</button>
+              <button type="submit">Register</button>
             </div>
           </form>
         </div>

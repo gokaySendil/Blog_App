@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASEURL = "http://localhost:8000/api/users/";
+const BASEURL = "http://localhost:8000/api/users";
 
 // Login
 const loginUser = async () => {};
@@ -19,4 +19,9 @@ const logoutUser = async () => {
   localStorage.removeItem("user");
 };
 
-module.exports = { loginUser, registerUser, logoutUser };
+const authService = {
+  registerUser,
+  logoutUser,
+  loginUser,
+};
+export default authService;
